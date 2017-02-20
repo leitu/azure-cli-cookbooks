@@ -6,6 +6,13 @@
 #
 # All rights reserved - Do Not Redistribute
 #
+case node['platform_family']
+when 'rhel'
+  package 'openssl-devel'
+when 'debain'
+  package 'libssl-dev'
+end
+
 python_runtime node['azurecli']['azure']['python']['version'] do
   provider node['azurecli']['azure']['python']['provider']
 end
