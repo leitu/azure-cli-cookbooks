@@ -8,10 +8,10 @@
 #
 case node['azurecli']['azure']['version']
 when '1'
-  include_recipe 'cloudcli::_azure_nodejs'
+  include_recipe 'azurecli::_azure_nodejs'
 when '2'
-  include_recipe 'cloudcli::_azure_python'
+  include_recipe 'azurecli::_azure_python'
 else
-  include_recipe 'cloudcli::_azure_python'
-  include_recipe 'cloudcli::_azure_nodejs'
+  include_recipe 'azurecli::_azure_python'
+  include_recipe 'azurecli::_azure_nodejs'
 end
