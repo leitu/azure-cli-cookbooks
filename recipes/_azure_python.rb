@@ -9,7 +9,7 @@
 case node['platform_family']
 when 'rhel'
   package 'openssl-devel'
-when 'debain'
+when 'debian'
   package 'libssl-dev'
 end
 
@@ -17,15 +17,17 @@ python_runtime node['azurecli']['azure']['python']['version'] do
   provider node['azurecli']['azure']['python']['provider']
 end
 
-unless node['azurecli']['azure']['virtualenv'].nil?
+if node['azurecli']['azure']['virtualenv'].nil?
+  python_package 'azure-cli' do
+    version node['azurecli']['azure']['cli_version']\
+      if node['azurecli']['azure']['cli_version']
+  end
+else
   python_virtualenv node['azurecli']['azure']['virtualenv']
 
   python_package 'azure-cli' do
-    version node['azurecli']['azure']['cli_version'] if node['azurecli']['azure']['cli_version']
+    version node['azurecli']['azure']['cli_version']\
+      if node['azurecli']['azure']['cli_version']
     virtualenv node['azurecli']['azure']['virtualenv']
-  end
-else
-  python_package 'azure-cli' do
-    version node['azurecli']['azure']['cli_version'] if node['azurecli']['azure']['cli_version']
   end
 end
